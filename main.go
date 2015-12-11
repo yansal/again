@@ -18,6 +18,7 @@ func main() {
 	}
 	for {
 		cmd := exec.Command(name, flag.Args()[1:]...)
+		cmd.Stdin = os.Stdin
 		cmd.Stdout = os.Stdout
 		cmd.Stderr = os.Stderr
 
