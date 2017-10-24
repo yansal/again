@@ -6,10 +6,10 @@ import (
 	"log"
 	"os"
 	"os/exec"
-	"time"
 )
 
 func main() {
+	fail := flag.Bool("fail", false, "run until command fails")
 	flag.Parse()
 	name := flag.Arg(0)
 	if name == "" {
@@ -22,16 +22,10 @@ func main() {
 		cmd.Stdout = os.Stdout
 		cmd.Stderr = os.Stderr
 
-		err := cmd.Start()
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		err = cmd.Wait()
-		if err != nil {
+		err := cmd.Run()
+		if err != nil && !*fail {
 			log.Print(err)
-			time.Sleep(time.Second)
-		} else {
+		} else if err != nil || !*fail {
 			break
 		}
 	}
