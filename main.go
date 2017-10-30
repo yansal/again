@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 	"os/exec"
+	"time"
 )
 
 func main() {
@@ -13,6 +14,7 @@ func main() {
 	log.SetPrefix("again: ")
 
 	fail := flag.Bool("fail", false, "run until command fails")
+	sleep := flag.Duration("sleep", 0, "how long to sleep before running again?")
 	flag.Parse()
 	cmdname := flag.Arg(0)
 	if cmdname == "" {
@@ -30,6 +32,10 @@ func main() {
 			log.Print(err)
 		} else if err != nil || !*fail {
 			break
+		}
+
+		if *sleep != 0 {
+			time.Sleep(*sleep)
 		}
 	}
 }
