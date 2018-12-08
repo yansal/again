@@ -18,9 +18,10 @@ func main() {
 	sleep := flag.Duration("sleep", 0, "how long to sleep before running again?")
 	silent := flag.Bool("silent", false, "don't print failed attempts error message")
 	flag.Parse()
+
 	cmdname := flag.Arg(0)
 	if cmdname == "" {
-		fmt.Println("usage:", "again cmdname [cmdargs...]")
+		fmt.Println("usage:", "again [options] cmdname [cmdargs...]")
 		os.Exit(1)
 	}
 
